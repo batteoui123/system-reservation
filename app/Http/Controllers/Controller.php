@@ -11,10 +11,10 @@ use Illuminate\Http\Request;
 class Controller extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
-    public function login(Request $request)
-    {
-        return response()->json([
-            'message' => 'POST reçu avec succès ✅'
-        ]);
-    }
+//    public function login(Request $request)
+//    {
+//        return response()->json([
+//            'message' => 'POST reçu avec succès ✅'
+//        ]);
+//    }
 }

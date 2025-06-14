@@ -97,7 +97,7 @@
             <p>Accédez à votre espace</p>
         </div>
 
-        <form method="POST"  action="{{ url('/login') }}">
+        <form method="POST"  action="{{ url('/logins') }}">
             @csrf
             <div class="mb-2">
                 <label for="email" class="form-label">Adresse email</label>
@@ -105,7 +105,7 @@
             </div>
             <div class="mb-2">
                 <label for="password" class="form-label">Mot de passe</label>
-                <input type="password" class="form-control" id="password" name="password" placeholder="********" required>
+                <input type="password" class="form-control" id="password" name="mot_de_passe" placeholder="********" required>
             </div>
             <button type="submit" class="btn btn-login w-100">Se connecter</button>
         </form>

@@ -1,5 +1,7 @@
 <?php
 
+
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,5 +32,7 @@ Route::get('/login-etudiant', function () {
     return view('auth.login-etudiant');
 })->name('login.etudiant');
 
-//Route::post('/login', [AuthController::class, 'login']);
+Route::post('/logins', [AuthController::class, 'loginEtudiant'])->name('login.etu');
+Route::post('/logina', [AuthController::class, 'loginAdmin'])->name('login.ad');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 

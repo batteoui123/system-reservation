@@ -2,38 +2,57 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
-class AuthController
+class AuthController extends Controller
 {
-    //login etudiant
-//    public function login()
-//    {
-//        return response()->json(['message' => 'Connexion réussie. Bienvenue, ']);
-////        $request->validate([
-////            'email' => 'required|email',
-////            'mot_de_passe' => 'required',
-////        ]);
-////
-////        $utilisateur = Utilisateur::where('email', $request->email)->first();
-////
-////        if ($utilisateur && $utilisateur->role === 'etudiant' && Hash::check($request->mot_de_passe, $utilisateur->mot_de_passe)) {
-////            Auth::login($utilisateur);
-////            return redirect('/calendar');
-//////            return response()->json(['message' => 'Connexion réussie. Bienvenue, ' . $utilisateur->nom . '!']);
-////      }
-////
-////        return back()->withErrors(['email' => 'Identifiants invalides ou accès non autorisé.']);
-//    }
-
-    public function login(Request $request): \Illuminate\Http\JsonResponse
+    public function loginEtudiant(Request $request)
     {
-        return response()->json([
-            'message' => 'Connexion API réussie ✅'
+        $request->validate([
+            'email' => 'required|email',
+            'mot_de_passe' => 'required',
         ]);
+
+        $user = User::where('email', $request->email)
+            ->where('role', 'etudiant')
+            ->first();
+
+        if ($user && Hash::check($request->mot_de_passe, $user->mot_de_passe)) {
+            Auth::login($user);
+            return redirect('/calendar');
+        }
+
+        return back()->withErrors(['email' => 'Échec de connexion étudiant.']);
     }
 
+    // 🧑‍💼 Login admin
+    public function loginAdmin(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'mot_de_passe' => 'required',
+        ]);
+
+        $user = User::where('email', $request->email)
+            ->where('role', 'admin')
+            ->first();
+
+        if ($user && Hash::check($request->mot_de_passe, $user->mot_de_passe)) {
+            Auth::login($user);
+            return redirect('/calendar');
+        }
+
+
+        return back()->withErrors(['email' => 'Échec de connexion admin.']);
+    }
+
+    // 🔓 Déconnexion
+    public function logout()
+    {
+        Auth::logout();
+        return redirect('/');
+    }
 }
-
-
-
