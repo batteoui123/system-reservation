@@ -17,5 +17,6 @@ class VerifyCsrfToken extends Middleware
         'login-admin',
         'login-etudiant',
         'logout',
+        'admin/reservations/*/accept'
     ];
 }

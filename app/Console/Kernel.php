@@ -15,8 +15,13 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('libere:locaux')->everyFiveMinutes(); // ou hourly, etc.
     }
+
+    protected $commands = [
+        \App\Console\Commands\ReleaseLocaux::class,
+    ];
+
 
     /**
      * Register the commands for the application.

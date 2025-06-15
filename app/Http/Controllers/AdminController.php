@@ -21,28 +21,22 @@ class AdminController extends Controller
         // Retourner la vue avec les réservations
         return response()->json($reservations);
     }
-//}
 
-  //accepter la reservation
+
     public function acceptReservation($id)
     {
-        // Vérifier si l'utilisateur est admin
-        if (Auth::user()->role !== 'admin') {
-            return redirect('/login'); // Rediriger si ce n'est pas un admin
-        }
+        $reservation = Reservation::findOrFail($id);
+        $reservation->statut = 'accepte';
+        $reservation->save();
 
-        // Trouver la réservation par son ID
-        $reservation = Reservation::find($id);
+        // Marquer le local comme occupé
+        $local = $reservation->local;
+        $local->status = 'occupe';
+        $local->save();
+        return response()->json($local);
 
-        if (!$reservation) {
-            return redirect()->back()->with('error', 'Réservation non trouvée.');
-        }
-
-        $reservation->status = 'accepté'; // Exemple de statut
-        $reservation->save(); // Enregistrer les changements
-
-        // Rediriger vers la liste des réservations avec un message de succès
-        return redirect()->route('admin.reservations')->with('success', 'Réservation acceptée avec succès.');
+//        return redirect()->back()->with('success', 'Réservation acceptée, salle marquée comme occupée.');
     }
+
 
 }

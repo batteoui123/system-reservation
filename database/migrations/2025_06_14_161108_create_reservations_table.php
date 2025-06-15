@@ -17,7 +17,7 @@ return new class extends Migration
             $table->time('heure_debut');
             $table->time('heure_fin');
 
-            $table->enum('statut', ['en attente', 'accepté', 'refusé'])->default('en attente');
+            $table->enum('statut', ['en attente', 'accepte', 'refuse','termine'])->default('en attente');
             $table->string('motif_refus')->nullable();
             $table->string('message_annulation')->nullable();
             $table->unsignedBigInteger('etudiant_id');

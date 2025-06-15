@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Local extends Model
 {
+    protected $table = 'locaux';
     protected $fillable = ['nom', 'type', 'capacite', 'status'];
 
     public function reservations()
