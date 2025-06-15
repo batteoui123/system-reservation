@@ -51,10 +51,9 @@
 
 
     <div class="d-flex justify-content-center mt-5">
-        <a href="{{ route('etudiant.reserver', ['id' => $someId]) }}" class="btn btn-lg btn-primary px-5 py-3 shadow">
-    Réserver une salle
-</a>
-
+        <a href="/etudiant/locaux" class="btn btn-lg btn-primary px-5 py-3 shadow">
+            Réserver une salle
+        </a>
     </div>
 </div>
 
