@@ -26,6 +26,14 @@ class UtilisateursTableSeeder extends Seeder
                 'role' => 'etudiant',
                 'created_at' => now(),
                 'updated_at' => now(),
+            ],
+            [
+                'nom' => 'souka elf',
+                'email' => 'souka@ensa.ma',
+                'mot_de_passe' => 'soukaPassword',
+                'role' => 'etudiant',
+                'created_at' => now(),
+                'updated_at' => now(),
             ]
         ]);
     }
