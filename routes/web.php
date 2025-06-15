@@ -86,9 +86,10 @@ Route::get('/etudiant/reserver/{id}', function ($id) {
     return view('etudiant.reserver', compact('local'));
 })->name('etudiant.reserver');
 
+// Route::get('/etudiant/mes-reservations', function () {
+//     return view('etudiant.mes_reservations');
+// })->name('etudiant.mes_reservations');
 
-// Route::view('/etudiant/mes-reservations', 'etudiant.mes_reservations')->name('etudiant.mesReservations');
-// Interface étudiant
 Route::get('/etudiant/mes-reservations', function () {
     return view('etudiant.mes_reservations', [
         'reservations' => [
@@ -110,33 +111,24 @@ Route::get('/etudiant/mes-reservations', function () {
             ],
         ],
     ]);
-});
+})->name('etudiant.mes_reservations');
+
+use App\Models\Reservation;
+
+Route::get('/etudiant/dashboard', function() {
+    $someId = 123; // or fetch dynamically
+    $reservations = Reservation::orderBy('date', 'desc')->get();
+
+    // Merge all variables in one array and pass to view
+    return view('etudiant.dashboard', [
+        'someId' => $someId,
+        'reservations' => $reservations,
+    ]);
+})->name('etudiant.dashboard');
 
 
 
 
-// ------ Espace Admin ------
-// Route::view('/admin/reservations', 'admin.reservations')->name('admin.reservations');
-
-
-// Route::get('/admin/reservations', function () {
-//     $reservations = collect([
-//         (object)[
-//             'etudiant' => (object)['utilisateur' => (object)['nom' => 'Soukayna']],
-//             'local' => (object)['nom' => 'Salle B1'],
-//             'date' => '2025-06-15',
-//             'creneau' => '08:00 - 10:00'
-//         ],
-//         (object)[
-//             'etudiant' => (object)['utilisateur' => (object)['nom' => 'Karim']],
-//             'local' => (object)['nom' => 'Salle A2'],
-//             'date' => '2025-06-16',
-//             'creneau' => '10:00 - 12:00'
-//         ],
-//     ]);
-
-//     return view('admin.reservations', compact('reservations'));
-// })->name('admin.reservations');
 
 
 Route::post('/etudiant/reservation', function (Request $request) {
