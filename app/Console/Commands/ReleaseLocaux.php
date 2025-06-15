@@ -11,7 +11,8 @@ class ReleaseLocaux extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'libere:locaux';
+
 
     /**
      * The console command description.
