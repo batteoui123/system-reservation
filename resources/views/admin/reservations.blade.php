@@ -3,168 +3,150 @@
 @section('title', 'Réservations')
 
 @section('content')
+    @if (session('success'))
+        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-header bg-gradient text-white" style="background: linear-gradient(90deg, #4e73df 0%, #1cc88a 100%);">
+            <h5 class="mb-0 fw-bold" style = "color: #1e3a8a"><i class="fas fa-calendar-check me-2"></i>Gestion des réservations</h5>
+        </div>
+        <div class="card-body">
 
+            {{-- Filtrage --}}
+            <form method="GET" action="{{ route('admin.reservations.index') }}" class="row g-3 align-items-end mb-4">
+                <div class="col-md-4">
+                    <label for="date" class="form-label">Date :</label>
+                    <input type="date" name="date" id="date" class="form-control shadow-sm" value="{{ request('date') }}">
+                </div>
 
-    <table class="table table-hover table-bordered bg-white shadow rounded">
-        <thead class="table-primary text-primary">
-            <tr>
-                <th>Étudiant</th>
-                <th>Local</th>
-                <th>Date</th>
-                <th>Créneau</th>
-                <th class="text-center" style="width: 220px;">Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @forelse ($reservations as $res)
-                <tr>
-                    <td>{{ $res->etudiant->utilisateur->nom }}</td>
-                    <td>{{ $res->local->nom }}</td>
-                    <td>{{ \Carbon\Carbon::parse($res->date)->format('d/m/Y') }}</td>
-                    <td>{{ $res->creneau }}</td>
-                    <td class="text-center">
-                        <form action="#" method="POST" class="d-inline-block me-2">
-                            @csrf
-                            <button class="btn btn-primary btn-sm" >
-                                <i class="fas fa-check"></i> Valider
-                            </button>
-                        </form>
+                <div class="col-md-4">
+                    <label for="statut" class="form-label">Statut :</label>
+                    <select name="statut" id="statut" class="form-select shadow-sm">
+                        <option value="">-- Tous les statuts --</option>
+                        <option value="en attente" {{ request('statut') == 'en attente' ? 'selected' : '' }}>En attente</option>
+                        <option value="accepte" {{ request('statut') == 'accepte' ? 'selected' : '' }}>Accepté</option>
+                        <option value="refuse" {{ request('statut') == 'refuse' ? 'selected' : '' }}>Refusé</option>
+                    </select>
+                </div>
 
-                        <form action="#" method="POST" class="d-inline-block">
-                            @csrf
-                            <input
-                                type="text"
-                                name="motif_refus"
-                                placeholder="Motif refus"
-                                class="form-control form-control-sm d-inline-block mb-1"
-                                style="width: 130px;"
-                                
-                                title="Entrez un motif de refus"
-                            />
-                            <button class="btn btn-danger btn-sm w-100" >
-                                <i class="fas fa-times"></i> Refuser
-                            </button>
-                        </form>
-                    </td>
-                </tr>
-            @empty
-                <tr>
-                    <td colspan="5" class="text-center text-muted fst-italic py-4">
-                        Aucune réservation pour le moment.
-                    </td>
-                </tr>
-            @endforelse
-        </tbody>
-       
-    </table>
+                <div class="col-md-4 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary flex-grow-1 shadow-sm"><i class="fas fa-filter me-1"></i>Filtrer</button>
+                    <a href="{{ route('admin.reservations.index') }}" class="btn btn-outline-secondary shadow-sm">Réinitialiser</a>
+                </div>
+            </form>
 
+            {{-- Tableau --}}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle shadow-sm">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Étudiant</th>
+                            <th>Local</th>
+                            <th>Date</th>
+                            <th>Créneau</th>
+                            <th>Statut</th>
+                            <th class="text-center" style="width: 300px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @forelse ($reservations as $res)
+                        <tr class="@if($res->statut === 'accepte') table-success @elseif($res->statut === 'refuse') table-danger @endif">
+                            <td>{{ $res->etudiant->utilisateur->nom }}</td>
+                            <td>{{ $res->local->nom }}</td>
+                            <td>{{ \Carbon\Carbon::parse($res->date)->format('d/m/Y') }}</td>
+                            <td>{{ $res->heure_debut }} - {{ $res->heure_fin }}</td>
+                            <td>
+                                @if($res->statut === 'accepte')
+                                    <span class="badge bg-success"><i class="fas fa-check-circle me-1"></i> Accepté</span>
+                                @elseif($res->statut === 'refuse')
+                                    <span class="badge bg-danger"><i class="fas fa-times-circle me-1"></i> Refusé</span>
+                                @else
+                                    <span class="badge bg-warning text-dark"><i class="fas fa-clock me-1"></i> En attente</span>
+                                @endif
+                            </td>
+                            <td class="text-center">
+                                <div class="d-flex justify-content-center gap-2">
+                                    {{-- Valider --}}
+                                    <form action="{{ route('admin.reservations.valider', $res->id) }}" method="POST" class="flex-fill">
+                                        @csrf
+                                        <button class="btn btn-success btn-sm w-100 @if($res->statut === 'accepte') disabled @endif">
+                                            <i class="fas fa-check"></i>
+                                            {{ $res->statut === 'accepte' ? 'Déjà accepté' : 'Valider' }}
+                                        </button>
+                                    </form>
+
+                                    {{-- Refuser --}}
+                                    <button type="button" class="btn btn-danger btn-sm flex-fill @if($res->statut === 'refuse') disabled @endif"
+                                            data-bs-toggle="modal" data-bs-target="#refuserModal{{ $res->id }}">
+                                        <i class="fas fa-times"></i> {{ $res->statut === 'refuse' ? 'Déjà refusé' : 'Refuser' }}
+                                    </button>
+
+                                    {{-- Modal --}}
+                                    <div class="modal fade" id="refuserModal{{ $res->id }}" tabindex="-1" aria-labelledby="refuserModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header bg-danger text-white">
+                                                    <h5 class="modal-title">Refuser la réservation</h5>
+                                                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                                                </div>
+                                                <form action="{{ route('admin.reservations.refuser', $res->id) }}" method="POST">
+                                                    @csrf
+                                                    <div class="modal-body">
+                                                        <p class="mb-2">Statut actuel :
+                                                            <strong class="text-capitalize">{{ $res->statut }}</strong>
+                                                        </p>
+                                                        <label for="motif_refus" class="form-label">Motif (optionnel) :</label>
+                                                        <textarea class="form-control" id="motif_refus" name="motif_refus" rows="3">{{ $res->motif_refus ?? '' }}</textarea>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                                        <button type="submit" class="btn btn-danger">Confirmer</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </td>
+                        </tr>
+                    @empty
+                        <tr>
+                            <td colspan="6" class="text-center text-muted fst-italic py-4">
+                                Aucune réservation pour le moment.
+                            </td>
+                        </tr>
+                    @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 
     <style>
-        /* Table réservations */
-table.table {
-    border-collapse: collapse;
-    font-size: 0.95rem;
-    width: 100%;
-}
+        .card-header {
+            border-radius: .375rem .375rem 0 0;
+        }
 
-/* En-tête */
-table.table thead th {
-    background-color: #333; /* gris foncé */
-    color: #eee; /* texte clair */
-    font-weight: 700;
-    border: 1px solid #ccc;
-    text-align: left;
-    padding: 12px 15px;
-    border-radius: 0; /* plus d’arrondi */
-}
+        .table-hover tbody tr:hover {
+            background-color: #f1f5f9;
+        }
 
-/* Corps */
-table.table tbody tr {
-    background-color: #fff;
-    border-bottom: 1px solid #ddd;
-    transition: background-color 0.3s ease;
-}
+        .btn.disabled, .btn:disabled {
+            opacity: 0.65;
+            pointer-events: none;
+        }
 
-table.table tbody tr:hover {
-    background-color: #f2f2f2; /* gris très clair au hover */
-}
+        .modal-content {
+            border-radius: .75rem;
+        }
 
-/* Cellules */
-table.table tbody td {
-    padding: 12px 15px;
-    vertical-align: middle;
-    border: 1px solid #ddd;
-}
-
-/* Actions - bouton */
-.btn-sm {
-    font-size: 0.85rem;
-    padding: 5px 10px;
-    border-radius: 0; /* plus d’arrondi */
-    font-weight: 600;
-    transition: background-color 0.2s ease;
-}
-
-/* Boutons actifs */
-.btn-primary:not(:disabled) {
-    background-color: #555; /* gris moyen */
-    border-color: #555;
-    color: #fff;
-}
-
-.btn-primary:not(:disabled):hover {
-    background-color: #444;
-    border-color: #444;
-}
-
-.btn-danger:not(:disabled) {
-    background-color: #a00; /* rouge foncé */
-    border-color: #a00;
-    color: #fff;
-}
-
-.btn-danger:not(:disabled):hover {
-    background-color: #800;
-    border-color: #800;
-}
-
-/* Input motif refus */
-input[name="motif_refus"] {
-    font-size: 0.85rem;
-    border-radius: 0;
-    border: 1.5px solid #aaa;
-    transition: border-color 0.2s ease;
-    padding: 5px 8px;
-}
-
-input[name="motif_refus"]:focus {
-    border-color: #555;
-    box-shadow: none;
-    outline: none;
-}
-
-/* Texte “Aucune réservation...” */
-table.table tbody tr td.text-muted {
-    font-style: italic;
-    font-weight: 500;
-}
-
-/* Centrer les actions */
-td.text-center {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    align-items: center;
-}
-
-/* Petite marge entre le champ motif et bouton Refuser */
-form.d-inline-block {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    width: 150px;
-}
-
-</style>
+        .modal-footer .btn {
+            min-width: 100px;
+        }
+    </style>
 @endsection

@@ -3,7 +3,7 @@
 @section('title', 'Salles')
 
 @section('content')
-    <h2 class="mb-4 text-primary fw-bold">Gestion des Salles</h2>
+    <h2 class="mb-4 fw-bold" style = "color: #1e3a8a">Gestion des Salles</h2>
 
     <table class="table table-hover table-bordered bg-white shadow rounded">
         <thead class="table-primary text-primary">
