@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->date('date');
-            $table->string('creneau');
+            $table->time('heure_debut');
+            $table->time('heure_fin');
+
             $table->enum('statut', ['en attente', 'accepté', 'refusé'])->default('en attente');
             $table->string('motif_refus')->nullable();
             $table->string('message_annulation')->nullable();

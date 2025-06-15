@@ -60,11 +60,14 @@ class AuthController extends Controller
     public function logout()
     {
         Auth::logout();
-
-        // Invalider la session et supprimer le cookie de session
-//        request()->session()->invalidate();
-//        request()->session()->regenerateToken();
         return redirect('/')->with('status', 'Déconnexion réussie!');
+    }   public function hello()
+    {
+
+
+        return response()->json([
+            'message' => 'test for bassma'
+        ], 200);
     }
 
 }

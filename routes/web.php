@@ -1,6 +1,7 @@
 <?php
 
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
@@ -35,4 +36,9 @@ Route::get('/login-etudiant', function () {
 Route::post('/logins', [AuthController::class, 'loginEtudiant'])->name('login.etu');
 Route::post('/logina', [AuthController::class, 'loginAdmin'])->name('login.ad');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/hello', [AdminController::class, 'index'])->name('reservations');
 
+Route::middleware(['auth'])->group(function () {
+    // Route pour afficher la liste des réservations de l'admin
+    Route::get('/admin/reservations', [AdminController::class, 'index'])->name('admin.reservations');
+});
