@@ -22,10 +22,13 @@ class AuthController extends Controller
 
         if ($user && Hash::check($request->mot_de_passe, $user->mot_de_passe)) {
             Auth::login($user);
+            session(['user_id' => $user->id]);
             return redirect('/calendar');
         }
 
-        return back()->withErrors(['email' => 'Échec de connexion étudiant.']);
+        return response()->json([
+            'message' => 'Identifiants invalides'
+        ], 401);
     }
 
     // 🧑‍💼 Login admin
@@ -42,17 +45,26 @@ class AuthController extends Controller
 
         if ($user && Hash::check($request->mot_de_passe, $user->mot_de_passe)) {
             Auth::login($user);
+            session(['user_id' => $user->id]);
             return redirect('/calendar');
         }
+        return response()->json([
+            'message' => 'Identifiants invalides'
+        ], 401);
 
-
-        return back()->withErrors(['email' => 'Échec de connexion admin.']);
+//        return back()->withErrors(['email' => 'Échec de connexion étudiant.']);
     }
+
 
     // 🔓 Déconnexion
     public function logout()
     {
         Auth::logout();
-        return redirect('/');
+
+        // Invalider la session et supprimer le cookie de session
+//        request()->session()->invalidate();
+//        request()->session()->regenerateToken();
+        return redirect('/')->with('status', 'Déconnexion réussie!');
     }
+
 }
