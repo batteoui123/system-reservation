@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
+use App\Models\Reservation;
 
 
 
@@ -24,9 +25,6 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-Route::get('/calendar', function () {
-    return view('calendar');
-})->name('calendar');
 
 Route::get('/login-admin', function () {
     return view('auth.login-admin');
@@ -86,9 +84,7 @@ Route::get('/etudiant/reserver/{id}', function ($id) {
     return view('etudiant.reserver', compact('local'));
 })->name('etudiant.reserver');
 
-// Route::get('/etudiant/mes-reservations', function () {
-//     return view('etudiant.mes_reservations');
-// })->name('etudiant.mes_reservations');
+
 
 Route::get('/etudiant/mes-reservations', function () {
     return view('etudiant.mes_reservations', [
@@ -113,7 +109,7 @@ Route::get('/etudiant/mes-reservations', function () {
     ]);
 })->name('etudiant.mes_reservations');
 
-use App\Models\Reservation;
+
 
 Route::get('/etudiant/dashboard', function() {
     $someId = 123; // or fetch dynamically
@@ -173,3 +169,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::view('/utilisateurs', 'admin.utilisateurs')->name('utilisateurs');
 });
+
+
+Route::get('/admin/dashboard', function() {
+
+    return view('admin.dashboard');
+})->name('admin.dashboard');

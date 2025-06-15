@@ -158,7 +158,10 @@ body {
     
     <div class="main-container">
         <aside class="sidebar">
-            <a href="{{ route('admin.reservations') }}" class="{{ request()->routeIs('admin.reservations') ? 'active' : '' }}">
+             <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">
+        <i class="fas fa-chart-line"></i> Dashboard
+    </a>
+                        <a href="{{ route('admin.reservations') }}" class="{{ request()->routeIs('admin.reservations') ? 'active' : '' }}">
                 <i class="fas fa-calendar-check"></i> Réservations
             </a>
             <a href="{{ route('admin.salles') }}" class="{{ request()->routeIs('admin.salles') ? 'active' : '' }}">
