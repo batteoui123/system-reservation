@@ -49,6 +49,7 @@
                         <th>Date</th>
                         <th>Créneau</th>
                         <th>Statut</th>
+                        <th>motif</th>
                         <th class="text-center" style="width: 300px;">Actions</th>
                     </tr>
                     </thead>
@@ -68,6 +69,7 @@
                                     <span class="badge bg-warning text-dark"><i class="fas fa-clock me-1"></i> En attente</span>
                                 @endif
                             </td>
+                            <td>{{ $res->motif_reservation }}</td>
                             <td class="text-center">
                                 <div class="d-flex justify-content-center gap-2">
                                     {{-- Valider --}}

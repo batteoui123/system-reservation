@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -181,18 +183,10 @@
 
 <div class="main-container">
     <aside class="sidebar">
-        <a href="{{ route('admin.dashboard.index') }}"
-           class="{{ request()->routeIs('admin.dashboard.*') ? 'active' : '' }}">
-            <i class="fas fa-chart-line"></i> Dashboard
-        </a>
-
-        <a href="{{ route('admin.reservations.index') }}"
-           class="{{ request()->routeIs('admin.reservations.*') ? 'active' : '' }}">
+        <a href="{{ route('etudiant.dashboard') }}" class="{{ request()->routeIs('etudiant.dashboard') ? 'active' : '' }}">
             <i class="fas fa-calendar-check"></i> Réservations
         </a>
-
-        <a href="{{ route('admin.salles.index') }}"
-           class="{{ request()->routeIs('admin.salles.*') ? 'active' : '' }}">
+        <a href="{{ route('etudiant.salles') }}" class="{{ request()->routeIs('etudiant.salles') ? 'active' : '' }}">
             <i class="fas fa-door-open"></i> Salles
         </a>
 

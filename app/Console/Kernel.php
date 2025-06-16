@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\TerminerReservations;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,11 +16,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('libere:locaux')->everyFiveMinutes(); // ou hourly, etc.
+        $schedule->command('reservations:terminer')->everyMinute(); // ou hourly(), daily(), etc.
     }
 
+
     protected $commands = [
-        \App\Console\Commands\ReleaseLocaux::class,
+        TerminerReservations::class,
     ];
 
 

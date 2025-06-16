@@ -11,15 +11,15 @@ class LocauxTableSeeder extends Seeder
     {
         DB::table('locaux')->insert([
             [
-                'nom' => 'Salle 101',
+                'nom' => 'Salle B20',
                 'type' => 'Salle',
-                'capacite' => 30,
+                'capacite' => 40,
                 'status' => 'libre',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'nom' => 'Conférence A',
+                'nom' => 'salle de conference',
                 'type' => 'Conférence',
                 'capacite' => 100,
                 'status' => 'libre',
@@ -29,7 +29,7 @@ class LocauxTableSeeder extends Seeder
             [
                 'nom' => 'Amphi 1',
                 'type' => 'Amphi',
-                'capacite' => 200,
+                'capacite' => 300,
                 'status' => 'libre',
                 'created_at' => now(),
                 'updated_at' => now(),

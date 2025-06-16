@@ -15,7 +15,7 @@
                 <th>Actions</th>
             </tr>
         </thead>
-        
+
         <tbody>
             @foreach($reservations as $res)
                 <tr>
@@ -23,9 +23,9 @@
                     <td>{{ $res->date }}</td>
                     <td>{{ $res->creneau }}</td>
                     <td>
-                        <span class="badge 
-                            @if($res->statut == 'accepté') bg-success
-                            @elseif($res->statut == 'refusé') bg-danger
+                        <span class="badge
+                            @if($res->statut == 'accepte') bg-success
+                            @elseif($res->statut == 'refuse') bg-danger
                             @else bg-warning text-dark @endif">
                             {{ $res->statut }}
                         </span>
@@ -37,7 +37,7 @@
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-outline-danger btn-sm">Annuler</button>
                             </form>
-                        @elseif($res->statut == 'refusé')
+                        @elseif($res->statut == 'refuse')
                             <small class="text-danger">{{ $res->motif_refus }}</small>
                         @endif
                     </td>

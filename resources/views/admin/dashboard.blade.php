@@ -42,17 +42,33 @@
         @else
             <ul class="list-group shadow-sm">
                 @foreach($reservationsRecentes as $reservation)
-                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 border-bottom">
-                        <div>
-                           une  demande de reservation envoyée par
-                            <strong>{{ $reservation->etudiant->utilisateur->nom }}
-                            </strong>
-                            <strong>{{ $reservation->local->nom }}</strong>
-
-                            le {{ $reservation->created_at }} à {{ $reservation->created_at->format('H:i') }}
-
+                    <li class="list-group-item d-flex justify-content-between align-items-center border-0 border-bottom"><div class="reservation-notification">
+                            Une demande de réservation d'une
+                            <strong>{{ $reservation->local->type }}</strong>
+                            est envoyée par l'étudiant
+                            <strong>{{ $reservation->etudiant->utilisateur->nom }}</strong>
+                            le {{ $reservation->created_at->format('d/m/Y') }} à {{ $reservation->created_at->format('H:i') }}
                         </div>
-                        <span class="badge rounded-pill" style="background-color: #dbeafe; color: #1e3a8a;">Confirmé</span>
+
+
+                        @php
+                            $etat = $reservation->statut;
+                        @endphp
+
+                        <span class="badge rounded-pill
+
+                            @if ($etat === 'accepte' || $etat === 'refuse'  ) bg-success
+                            @else bg-warning text-dark
+                            @endif
+                        ">
+                            @if ($etat === 'accepte' || $etat === 'refuse' )
+                                <i class="fas fa-check-circle me-1"></i> Traité
+                            @else
+                                <i class="fas fa-clock me-1"></i> À traiter
+                            @endif
+
+                         </span>
+
                     </li>
                 @endforeach
             </ul>

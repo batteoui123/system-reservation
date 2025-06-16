@@ -23,7 +23,7 @@ class AuthController extends Controller
         if ($user && Hash::check($request->mot_de_passe, $user->mot_de_passe)) {
             Auth::login($user);
             session(['user_id' => $user->id]);
-            return redirect('/calendar');
+            return redirect()->route('etudiant.dashboard');
         }
 
         return response()->json([
@@ -46,7 +46,7 @@ class AuthController extends Controller
         if ($user && Hash::check($request->mot_de_passe, $user->mot_de_passe)) {
             Auth::login($user);
             session(['user_id' => $user->id]);
-            return redirect('/calendar');
+            return redirect()->route('admin.dashboard.index');
         }
         return response()->json([
             'message' => 'Identifiants invalides'
@@ -61,13 +61,9 @@ class AuthController extends Controller
     {
         Auth::logout();
         return redirect('/')->with('status', 'Déconnexion réussie!');
-    }   public function hello()
-    {
-
-
-        return response()->json([
-            'message' => 'test for bassma'
-        ], 200);
     }
+
+
+
 
 }

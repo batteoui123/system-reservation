@@ -8,7 +8,7 @@ class Reservation extends Model
 {
     protected $table = 'reservations';
     protected $fillable = [
-        'date', 'heure_debut','heure_fin', 'statut',
+        'date', 'heure_debut','heure_fin', 'statut','motif_reservation',
         'motif_refus', 'message_annulation',
         'etudiant_id', 'local_id'
     ];

@@ -19,6 +19,7 @@ return new class extends Migration
 
             $table->enum('statut', ['en attente', 'accepte', 'refuse','termine'])->default('en attente');
             $table->string('motif_refus')->nullable();
+            $table->text('motif_reservation')->nullable();
             $table->string('message_annulation')->nullable();
             $table->unsignedBigInteger('etudiant_id');
             $table->unsignedBigInteger('local_id');

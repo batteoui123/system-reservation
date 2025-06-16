@@ -17,6 +17,7 @@ class VerifyCsrfToken extends Middleware
         'login-admin',
         'login-etudiant',
         'logout',
-        'admin/*'
+        'admin/*',
+        'etudiant/*',
     ];
 }

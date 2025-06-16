@@ -12,7 +12,7 @@ class UtilisateursTableSeeder extends Seeder
     {
         DB::table('utilisateurs')->insert([
             [
-                'nom' => 'Admin Principal',
+                'nom' => 'Admin',
                 'email' => 'admin@ensa.ma',
                 'mot_de_passe' => Hash::make('password'),
                 'role' => 'admin',
@@ -20,13 +20,22 @@ class UtilisateursTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'nom' => 'Etudiant Exemple',
-                'email' => 'etudiant@ensa.ma',
+                'nom' => 'mohamed ouahabi',
+                'email' => 'mohamed@etu.uae.ac.ma',
+                'mot_de_passe' => Hash::make('password'),
+                'role' => 'etudiant',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'nom' => 'youssef ouahabi',
+                'email' => 'youssef@etu.uae.ac.ma',
                 'mot_de_passe' => Hash::make('password'),
                 'role' => 'etudiant',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]
+
         ]);
     }
 }

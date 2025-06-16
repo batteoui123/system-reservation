@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
             AdminsTableSeeder::class,
             EtudiantsTableSeeder::class,
             LocauxTableSeeder::class,
-            ReservationsTableSeeder::class,
+
         ]);
     }
 

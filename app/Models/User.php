@@ -34,11 +34,11 @@ class User extends Authenticatable
     // Relations (si tu les utilises)
     public function admin()
     {
-        return $this->hasOne(Admin::class);
+        return $this->hasOne(Admin::class, 'utilisateur_id');
     }
 
     public function etudiant()
     {
-        return $this->hasOne(Etudiant::class);
+        return $this->hasOne(Etudiant::class, 'utilisateur_id');
     }
 }
