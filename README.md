@@ -228,7 +228,7 @@ Students can view available locaux and manage their own reservations.
 **Cancel Pending Reservations:**
 - Students can cancel their pending reservations from their dashboard
 
-![Screenshot of Cancel Pending Reservation](Screenshots/New%20Reservation%20-%20Cancel%20Pending%20Reservation.png)
+![Screenshot of Cancel Pending Reservation](Screenshots/Cancel%20Pending%20Reservation.png)
 
 ## 💻 Development Notes
 
