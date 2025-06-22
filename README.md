@@ -69,7 +69,6 @@ For initial testing after seeding the database, you can use the following creden
 
 - PHP (version specified in composer.json, usually 7.4 or higher)
 - Composer (for managing PHP dependencies)
-- Node.js and npm (for frontend dependencies)
 - Database Server (MySQL or PostgreSQL)
 
 ### Setup Instructions
@@ -85,12 +84,7 @@ For initial testing after seeding the database, you can use the following creden
    composer install
    ```
 
-3. **Install Node.js dependencies**
-   ```bash
-   npm install
-   ```
-
-4. **Environment setup**
+3. **Environment setup**
    ```bash
    cp .env.example .env
    ```
@@ -105,23 +99,23 @@ For initial testing after seeding the database, you can use the following creden
    DB_PASSWORD=YOUR_PASSWORD
    ```
 
-5. **Generate application key**
+4. **Generate application key**
    ```bash
    php artisan key:generate
    ```
 
-6. **Run migrations**
+5. **Run migrations**
    ```bash
    php artisan migrate
    ```
 
-7. **Seed the database (recommended for initial setup)**
+6. **Seed the database (recommended for initial setup)**
    ```bash
    php artisan db:seed
    ```
    This will populate the `utilisateurs`, `admins`, `etudiants`, and `locaux` tables with initial data.
 
-8. **Start the development server**
+7. **Start the development server**
    ```bash
    php artisan serve
    ```
